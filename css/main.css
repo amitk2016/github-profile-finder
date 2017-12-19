@@ -1,0 +1,50 @@
+body {
+  background-color: #1abc9c; }
+
+.admin {
+  flex: 0 0 40%;
+  border: 1px solid #f4f4f4;
+  margin-left: 1rem;
+  box-shadow: 0 0.7rem 0.8rem rgba(0, 0, 0, 0.3);
+  height: 60vh; }
+
+.display {
+  flex: 0 0 50%; }
+
+.orders li {
+  background-color: #d3d3d3;
+  list-style: none;
+  padding: 3.5rem 0 2rem 0;
+  margin-bottom: 1rem;
+  position: relative;
+  box-shadow: 0 0.7rem 0.8rem rgba(0, 0, 0, 0.3); }
+
+input {
+  border-radius: 100px;
+  border: none;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  padding: .2rem;
+  margin-left: 2rem;
+  margin-bottom: 1rem; }
+
+button {
+  cursor: pointer; }
+
+.remove {
+  position: absolute;
+  top: 8px;
+  right: 15px; }
+
+.editOrder {
+  position: absolute;
+  top: 8px;
+  right: 105px; }
+
+ul li .edit {
+  display: none; }
+
+ul li.edit .edit {
+  display: initial; }
+
+ul li.edit .noedit {
+  display: none; }
