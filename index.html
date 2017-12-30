@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Js-Files</title>
+    <title>Github Profile Finder</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -27,53 +27,89 @@
 
   <body id="page-top">
     
-    <h1 class="mb-5 pt-4 text-center">Coffee App</h1>
+   <!--  <h1 class="mb-5 pt-4 text-center">Github Finder</h1> -->
 
-    <div class="d-flex box">
-        <div class="admin text-center pt-5">
-           <h2 class="mb-5">Add a Coffee Order</h2>
-          <p><strong>Name: </strong><input type="text" id="name"></p>
-          <p class="mb-5"><strong>Drink: </strong><input type="text" id="drink"></p>
-          <button class="btn btn-primary" id="add-order" class="add">Add this Order</button> 
-        </div>
-        <div class="display">
-            <div class=" main text-center ">
-              
-              <h2 class="mb-3">Coffee Orders</h2>
-              <ul class="orders"></ul>
 
-              <template id="order-template"> 
-                <li data-id="{{id}}">
-                    <p>
-                        <strong>Name:</strong> 
-                        <span class="noedit name">{{name}}</span>
-                        <input class="edit name" type="text">
-                    </p> 
-                    <p>
-                        <strong>Drink:</strong> 
-                        <span class="noedit drink">{{drink}}</span>
-                        <input class="edit drink" type="text">
-                    </p> 
-                    <button data-id='{{id}}' class='remove btn btn-danger btn-sm'>
-                        Delete
-                    </button>
-                    <button  class='editOrder noedit btn btn-info btn-sm'>
-                        Edit
-                    </button>
-                    <button  class='saveEdit edit btn btn-primary btn-sm'>
-                        Save
-                    </button>
-                    <button  class='cancelEdit edit btn btn-warning btn-sm'>
-                        Cancel
-                    </button>
-                </li>
+    <main>
+      <div class="container wrapper">
+        <div class="row">
+          <!-- <h1 class="text-center">Github Profile Finder</h1> -->
+          <div class="col-md-4 form-panel">
+            <form class="pl-4">
+              <div class="text-center mb-3">
+                <i class="fa fa-github fa-3x" aria-hidden="true"></i>
+              </div>
+              <h2 class="mb-5">Search Github User</h2>
+              <div class="form-group">
+                <label for="searchUser" class="mb-4">Enter a username to fetch a users profile and repos</label>
+                <input type="text" class="form-control" id="searchUser" aria-describedby="emailHelp" placeholder="Enter Username">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your profile with anyone else.</small>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-8 profile-panel">
+              <div id="results">
+                <template id="info-template">
+                <div class="row text-center">
+                  <div class="col-md-4 text-center">
+                    <h2 class="mb-3">{{name}}</h2>
+                    <img src="{{avatar_url}}" alt="image" class="img-circle mb-3">
+                    <a href="{{html_url}}" class="profile-url mb-3" target="_blank">View Profile</a>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="mb-1">
+                      <span class="badge badge-warning mr-2">Public Repos:{{public_repos}}</span>
+                      <span class="badge badge-primary mr-2">Public Gists:{{public_gists}}</span>
+                    
+                      <span class="badge badge-success mr-2">Followers:{{followers}}</span>
+                      <span class="badge badge-info">Following:{{following}}</span>
+                    </div>
+                    <br>
+                    <ul class="list-group list-info">
+                      <li class="list-group-item"><strong>Company: </strong>{{company}}</li>
+                      <li class="list-group-item"><strong>Website/Blog: </strong>{{blog}}</li>
+                      <li class="list-group-item"><strong>Location: </strong>{{location}}</li>
+                      <li class="list-group-item"><strong>Member Since: </strong>{{created_at}}</li>
+                    </ul>
+                  </div>
+                </div>
+                 <h4 class="text-center">Latest Repos</h4>
               </template>
 
+              </div>
               
-            </div>
+              <div id="repos">
+               
+                <template id="repo-template">
+                  <div class="card p-1">
+                    <div class="card-block">
+                      <div class="row">
+                        <div class="col-md-5">
+                            <p class="pl-2"><strong>{{name}}</strong></p>
+                        </div>
+                        <div class="col-md-4">
+                          <span class="badge badge-primary mr-2">Forks:{{forks_counts}}</span>
+                    
+                          <span class="badge badge-success mr-2">Watchers:{{watchers_count}}</span>
+                          <span class="badge badge-info">Stars:{{starsgazers_count}}</span>
+                        </div>
+                        <div class="col-md-3">
+                          <a href="{{html_url}}" target="_blank" class="repo-button">Repo Page</a>
+                        </div>
+                      </div>
+
+                    
+                    </div>
+                  </div>
+                  
+                </template>
+              </div>
+          </div>
+
         </div>
-    </div>
-    
+      </div>
+    </main>
+
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>

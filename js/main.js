@@ -1,119 +1,92 @@
 $(function(){
 
-	var $orders = $('.orders');
-	var $name = $('#name');
-	var $drink = $('#drink');
+	var infoTemplate = $('#info-template').html();
+	var $results = $('#results');
+	var repoTemplate = $('#repo-template').html();
+	var $repos = $('#repos');
 
-	var orderTemplate = $('#order-template').html();
+	function displayUserProfile(user){
 
-	function addOrders(order){
-		$orders.append(Mustache.render(orderTemplate,order));
+			$results.html("");
+			$results.append(Mustache.render(infoTemplate,user));
+
 	}
 
-	// GET 
-	$.ajax({
-			type:'GET',
-			url:'http://localhost:3000/orders',
-			success:function(orders){
-				$.each(orders,function(i,order){
-					addOrders(order);
-				});
-			},
-			error:function(){
-				alert('error loading orders');
+	function displayUserRepos(repos){
+			$repos.html("");
+			$.each(repos,function(i,repo){
+				$repos.append(Mustache.render(repoTemplate,repo));
+			});
+
+			
+
+	}
+
+	$('#searchUser').on('keyup',function(e){
+		var userName = e.target.value ;
+
+		$.ajax({
+			url:"https://api.github.com/users/"+userName,
+			data:{
+				client_id:"eeb6fbd4669947d2f264",
+				client_secret:"fcd2764a85e21b5acdb1635a352b6b5079cecf1b",
+				
 			}
+
+		}).done(function(user){
+			$.ajax({
+				url:"https://api.github.com/users/"+userName+"/repos",
+				data:{
+					client_id:"eeb6fbd4669947d2f264",
+					client_secret:"fcd2764a85e21b5acdb1635a352b6b5079cecf1b",
+					sort:'created:asc',
+					per_page:4
+				}
+			}).done(function(repos){
+				// console.log(repos);
+				displayUserRepos(repos);
+			});
+			displayUserProfile(user);
 		});
-
-	// POST
-
-	 $('#add-order').on('click',function(){
-	 	var order = {
-	 		name: $name.val(),
-	 		drink:$drink.val()
-	 	}
-
-	 	$.ajax({
-			type:'POST',
-			url:'http://localhost:3000/orders',
-			data:order,
-			success:function(newOrder){
-				addOrders(newOrder);
-			},
-			error:function(){
-				alert('error saving orders');
-			}
-		});
-
-	 });
-
-
-
-	 //UPDATE
-
-	 $('.orders').on('click','.editOrder',function(){
-	 	var $li = $(this).closest('li');
-	 	$li.find('input.name').val( $li.find('input.name').html() );
-	 	$li.find('input.drink').val( $li.find('input.drink').html() );
-	 	$li.addClass('edit');
-
-	  }); // edit button pressed
-
-	 $('.orders').on('click','.cancelEdit',function(){
-	 	var $li = $(this).closest('li');
-	 	$li.removeClass('edit');
-
-	  }); // cancel button pressed
-
-	 $('.orders').on('click','.saveEdit',function(){
-	 	var $li = $(this).closest('li');
-	 	var order = {
-	 		name: $li.find('input.name').val(),
-	 		drink:$li.find('input.drink').val()
-	 	};
-
-	 	$.ajax({
-			type:'PUT',
-			url:'http://localhost:3000/orders/'+$li.attr('data-id'),
-			data:order,
-			success:function(newOrder){
-				$li.find('span.name').html(order.name);
-				$li.find('span.drink').html(order.drink);
-				$li.removeClass('edit');
-			},
-			error:function(){
-				alert('error updating orders');
-			}
-		});
-
-
-	  }); // save button pressed
-
-
-
-
-	 //DELETE
-
-	 $('.orders').on('click','.remove',function(){
-
-	 	var $li = $(this).closest('li');
-	 	
-
-	 	$.ajax({
-			type:'DELETE',
-			url:'http://localhost:3000/orders/' + $(this).attr('data-id'),
-
-			success:function(){
-				$li.fadeOut(300,function(){
-					$(this).remove();
-				});
-			},
-			error:function(){
-				alert('error deleting orders');
-			}
-		});
-
-	 });
-
-
+	});
+	
 
 });
+
+
+
+			// 		var html = "";
+			// var results = $("#results");
+			
+			// var profile = "View Profile";
+
+			// results.html("");
+
+			// html += "<h2>"+user.name +"</h2>";
+			// html += "<img src="+ user.avatar_url +">";
+			// html += '<a href="' + user.html_url + '">' + profile + '</a>';
+			// htmlRight += '<span class="'+badgePrimary+'">Public repo:'+ user.public_repos+'</span>';
+
+			// results.append(html);
+
+			// var htmlRight = "";
+			// var resultsRight = $("#results-right");
+			// var badgePrimary = "badge badge-primary";
+			// var badgeInfo = "badge badge-info";
+			// var badgeSuccess = "badge badge-success";
+			// var badgeWarning = "badge badge-warning";
+
+			// resultsRight.html("");
+
+			// htmlRight += '<span class="'+badgePrimary+'">Public repo:'+ user.public_repos+'</span>';
+			// htmlRight += '<span class="'+badgeSuccess+'">Public Gists:'+ user.public_gists+'</span>';
+			// htmlRight += '<span class="'+badgeInfo+'">Followers:'+ user.followers+'</span>';
+			// htmlRight += '<span class="'+badgeWarning+'">Following:'+ user.following+'</span>';
+
+			// resultsRight.append(htmlRight);
+
+
+
+
+
+
